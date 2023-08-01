@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP 51.250.6.37
+IP 84.252.130.188
 
 Frontend https://beiny.students.nomoredomains.sbs
 
