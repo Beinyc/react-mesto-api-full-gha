@@ -1,18 +1,19 @@
 // Подключаем dotenv чтобы с файла .env подключение было на сервере
 require('dotenv').config();
 const express = require('express');
+const cors = require('./middlewares/cors');
 
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const cors = require('cors');
+// const cors = require('cors');
 
-app.use(cors({
-  origin: 'https://beiny.students.nomoreparties.co',
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: 'https://beiny.students.nomoreparties.co',
+//   credentials: true,
+// }));
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -37,6 +38,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(requestLogger);
+app.use(cors);
 
 // удалить после проверки ревью временный crash-test
 app.get('/crash-test', () => {
