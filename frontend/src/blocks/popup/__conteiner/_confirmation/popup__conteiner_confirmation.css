@@ -1,0 +1,9 @@
+.popup__conteiner_confirmation {
+   width: 430px;
+   height: 181px;
+   background-color: white;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   position: relative;
+}

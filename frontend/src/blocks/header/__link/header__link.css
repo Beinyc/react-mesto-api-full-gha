@@ -1,0 +1,11 @@
+.header__link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-second);
+    transition: opacity 0.5s ease-out;
+  }
+    
+  .header__link:hover {
+      opacity: 0.6;
+    }

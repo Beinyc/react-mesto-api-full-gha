@@ -1,0 +1,16 @@
+.elements__signature {
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 19px;
+    align-items: center;
+    padding-bottom: 7px;
+}
+
+@media (max-width: 320px){
+    .elements__signature {
+        padding-right: 20px;
+    }
+}

@@ -1,0 +1,29 @@
+.elements {
+    max-width: 880px;
+    margin: 0 auto;
+    margin-top: 51px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    grid-gap: 18px;
+    grid-auto-flow: dense;
+}
+
+@media (max-width: 920px){
+    .elements {
+        max-width: 600px;
+        margin-top: 33px;
+    }
+}
+
+@media (max-width: 640px){
+    .elements {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 320px){
+    .elements {
+        grid-gap: 20px;
+        margin-top: 36px;
+    }
+}

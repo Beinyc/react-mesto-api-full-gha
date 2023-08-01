@@ -1,0 +1,14 @@
+.elements__like {
+    background-image: url(../../../images/elements/heard.svg);
+    border: 0;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 19px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.elements__like:hover {
+    opacity: 0.8;
+    transition: 0.4;
+    cursor: pointer;
+}

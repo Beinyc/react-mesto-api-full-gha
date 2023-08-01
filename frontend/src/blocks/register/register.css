@@ -1,0 +1,8 @@
+.register {
+    color: white;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}

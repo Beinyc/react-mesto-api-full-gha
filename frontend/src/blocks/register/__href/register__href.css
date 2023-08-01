@@ -1,0 +1,10 @@
+.register__href  {
+    color: white;
+    text-decoration: none;
+}
+
+.register__href:hover {
+    opacity: 0.8;
+    transition: 0.4;
+    cursor: pointer;
+}

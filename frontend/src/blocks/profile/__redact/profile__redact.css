@@ -1,0 +1,24 @@
+.profile__redact {
+    background-image: url(../../../images/profile/edit.svg);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    background-color: black;
+    border: solid 1px white;
+}
+
+@media (max-width: 440px){
+    .profile__redact{
+        width: 20px;
+        height: 20px;
+         }
+}
+
+.profile__redact:hover {
+    opacity: 0.8;
+    transition: 0.4;
+    cursor: pointer;
+}

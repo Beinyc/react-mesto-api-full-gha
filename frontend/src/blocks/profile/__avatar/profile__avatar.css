@@ -1,0 +1,38 @@
+.profile__avatar {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin: 0;
+    position: relative;
+    background-image: url(../../../images/profile/photo_2022-12-16_05-05-37.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+@media (max-width: 440px){
+    .profile__avatar {
+        max-width: 168px;
+        margin-bottom: 26px;
+    }
+}
+
+.profile__avatar::before {
+    background-color: #000;
+    opacity: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: url(../../../images/profile/edit.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 26px 26px;
+    transition: opacity 0.5s linear;
+  }
+  
+  .profile__avatar:hover::before {
+    opacity: 0.8;
+    cursor: pointer;
+  }
