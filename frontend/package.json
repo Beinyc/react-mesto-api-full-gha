@@ -20,6 +20,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "homepage": "https://beiny.students.nomoredomains.sbs",
   "eslintConfig": {
     "extends": [
       "react-app",

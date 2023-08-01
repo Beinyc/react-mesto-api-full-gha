@@ -10,7 +10,7 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 
 app.use(cors({
-  origin: 'https://api.beiny.students.nomoreparties.co',
+  origin: 'https://beiny.students.nomoreparties.co',
   credentials: true,
 }));
 
