@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const { URL_SERVER } = require('../utils/constants');
+
 const { Schema } = mongoose;
 
-const { URL_REGEX } = require('../utils/constants');
-
-// byaka
 const userSchema = new Schema(
   {
     email: {
@@ -23,8 +22,8 @@ const userSchema = new Schema(
       required: true,
       select: false,
       validate: {
-        validator: ({ length }) => length >= 6,
-        message: 'Пароль должен состоять минимум из 6 символов',
+        validator: ({ length }) => length >= 8,
+        message: 'Пароль должен состоять минимум из 8 символов',
       },
     },
 
@@ -50,7 +49,7 @@ const userSchema = new Schema(
       type: String,
       default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
       validate: {
-        validator: (url) => URL_REGEX.test(url),
+        validator: (url) => URL_SERVER.test(url),
         message: 'Требуется ввести URL',
       },
     },

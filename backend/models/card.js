@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema.Types;
+const { Schema } = mongoose;
 
-const { URL_REGEX } = require('../utils/constants');
+const { URL_SERVER } = require('../utils/constants');
 
 const cardSchema = new Schema(
   {
@@ -20,7 +20,7 @@ const cardSchema = new Schema(
       type: String,
       required: true,
       validate: {
-        validator: (url) => URL_REGEX.test(url),
+        validator: (url) => URL_SERVER.test(url),
         message: 'Требуется ввести URL',
       },
     },

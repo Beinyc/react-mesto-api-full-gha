@@ -1,10 +1,10 @@
 const Card = require('../models/card');
 
-const ForbiddenError = require('../errors/ForbiddenError');
-const NotFoundError = require('../errors/NotFoundError');
-const InaccurateDataError = require('../errors/InaccurateDataError');
+const ErrorNotFound = require('../errors/ErrorNotFound');
+const ErrorHandler = require('../errors/ErrorHandler');
+const ErrorForbidden = require('../errors/ErrorForbidden');
 
-// Все карточки:
+// Карточки
 function getInitialCards(_, res, next) {
   Card
     .find({})
@@ -13,7 +13,7 @@ function getInitialCards(_, res, next) {
     .catch(next);
 }
 
-// Создание новой карточки:
+// Добавление карточки
 function addNewCard(req, res, next) {
   const { name, link } = req.body;
   const { userId } = req.user;
@@ -23,14 +23,14 @@ function addNewCard(req, res, next) {
     .then((card) => res.status(201).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new InaccurateDataError('Переданы некорректные данные при создании карточки'));
+        next(new ErrorHandler('Переданы некорректные данные при создании карточки'));
       } else {
         next(err);
       }
     });
 }
 
-// Удаление карточки:
+// Удаление карточек
 function deleteCard(req, res, next) {
   const { id: cardId } = req.params;
   const { userId } = req.user;
@@ -41,20 +41,20 @@ function deleteCard(req, res, next) {
     })
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('Данные по указанному id не найдены');
+        throw new ErrorNotFound('Данные по указанному id не найдены');
       }
 
       const { owner: cardOwnerId } = card;
 
       if (cardOwnerId.valueOf() !== userId) {
-        throw new ForbiddenError('Нет прав доступа');
+        throw new ErrorForbidden('Нет прав доступа');
       }
 
       return Card.findByIdAndDelete(cardId);
     })
     .then((deletedCard) => {
       if (!deletedCard) {
-        throw new NotFoundError('Карточка уже была удалена');
+        throw new ErrorNotFound('Карточка уже была удалена');
       }
 
       res.send({ data: deletedCard });
@@ -62,7 +62,7 @@ function deleteCard(req, res, next) {
     .catch(next);
 }
 
-// Лайк на карточки:
+// Лайки на карточки
 function addLike(req, res, next) {
   const { cardId } = req.params;
   const { userId } = req.user;
@@ -82,18 +82,18 @@ function addLike(req, res, next) {
     .then((card) => {
       if (card) return res.send({ data: card });
 
-      throw new NotFoundError('Карточка с указанным id не найдена');
+      throw new ErrorNotFound('Карточка с указанным id не найдена');
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new InaccurateDataError('Переданы некорректные данные при добавлении лайка карточке'));
+        next(new ErrorHandler('Переданы некорректные данные при добавлении лайка карточке'));
       } else {
         next(err);
       }
     });
 }
 
-// Удаление лайка с карточки:
+// Удаление лайков с карточек
 function removeLike(req, res, next) {
   const { cardId } = req.params;
   const { userId } = req.user;
@@ -113,11 +113,11 @@ function removeLike(req, res, next) {
     .then((card) => {
       if (card) return res.send({ data: card });
 
-      throw new NotFoundError('Данные по указанному id не найдены');
+      throw new ErrorNotFound('Данные по указанному id не найдены');
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new InaccurateDataError('Переданы некорректные данные при снятии лайка карточки'));
+        next(new ErrorHandler('Переданы некорректные данные при снятии лайка карточки'));
       } else {
         next(err);
       }
