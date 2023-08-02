@@ -1,10 +1,11 @@
-import { tokenAuthorization } from "./utils.js"
+import { config } from "./utils.js"
 
 export default class Api {
-  constructor({ tokenAuthorization }) {
-    this.tokenAuthorization = tokenAuthorization
-    this._urlSrvers = this.tokenAuthorization.urlSrvers
-    this._headers = this.tokenAuthorization.headers
+  constructor({ config }) {
+    // this.tokenAuthorization = tokenAuthorization
+    this._urlSrvers = config.urlSrvers
+    this._headers = config.headers
+    this._credentials = config.credentials;
   }
 
   _serverResponse(res) {
@@ -18,8 +19,8 @@ export default class Api {
   getUserData() {
     return fetch(`${this._urlSrvers}/users/me`, {
       method: "GET",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -28,8 +29,8 @@ export default class Api {
   getInitialCards() {
     return fetch(`${this._urlSrvers}/cards`, {
       method: "GET",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -38,8 +39,8 @@ export default class Api {
   editProfile(data) {
     return fetch(`${this._urlSrvers}/users/me`, {
       method: "PATCH",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -50,8 +51,8 @@ export default class Api {
   createNewCard(cardData) {
     return fetch(`${this._urlSrvers}/cards`, {
       method: "POST",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: cardData.name,
         link: cardData.link,
@@ -64,8 +65,8 @@ export default class Api {
   deleteCard(cardId) {
     return fetch(`${this._urlSrvers}/cards/${cardId}`, {
       method: "DELETE",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -74,8 +75,8 @@ export default class Api {
   cardLike(cardId) {
     return fetch(`${this._urlSrvers}/cards/${cardId}/likes`, {
       method: "PUT",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -84,8 +85,8 @@ export default class Api {
   deleteLikeCard(cardId) {
     return fetch(`${this._urlSrvers}/cards/${cardId}/likes`, {
       method: "DELETE",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -94,8 +95,8 @@ export default class Api {
   updateUserModule(data) {
     return fetch(`${this._urlSrvers}/users/me/avatar`, {
       method: "PATCH",
-      credentials: "include",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify(data),
     }).then((res) => {
       return this._serverResponse(res)
@@ -103,6 +104,6 @@ export default class Api {
   }
 }
 
-const tokenApi = new Api({ tokenAuthorization })
+const tokenApi = new Api({ config })
 
 export { tokenApi }
