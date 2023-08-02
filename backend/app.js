@@ -11,8 +11,8 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 
 app.use(cors({
-  // origin: 'https://beiny.students.nomoreparties.co',
-  origin: 'http://localhost:3001',
+  origin: 'https://beiny.students.nomoreparties.co',
+  // origin: 'http://localhost:3001',
   credentials: true,
 }));
 
