@@ -42,7 +42,7 @@ export default function App({}) {
   // получаем данные аватара и профиля с сервера
   // рендер данных при открытии страницы
   useEffect(() => {
-    if (loggedIn === true) {
+    loggedIn &&
       Promise.all([tokenApi.getUserData(), tokenApi.getInitialCards()])
         .then(([userInfo, cards]) => {
           setCurrentUser(userInfo)
@@ -51,8 +51,7 @@ export default function App({}) {
         .catch((err) => {
           console.log(`ошибка ${err}`)
         })
-    }
-    return
+    
   }, [loggedIn])
 
   function handleCardLike(card) {

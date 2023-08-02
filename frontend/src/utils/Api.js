@@ -5,7 +5,6 @@ export default class Api {
     // this.tokenAuthorization = tokenAuthorization
     this._urlSrvers = config.urlSrvers
     this._headers = config.headers
-    this._credentials = config.credentials;
   }
 
   _serverResponse(res) {
@@ -20,7 +19,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/users/me`, {
       method: "GET",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include'
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -30,7 +29,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/cards`, {
       method: "GET",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include'
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -40,7 +39,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -52,7 +51,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/cards`, {
       method: "POST",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
       body: JSON.stringify({
         name: cardData.name,
         link: cardData.link,
@@ -66,7 +65,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -76,7 +75,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -86,7 +85,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
     }).then((res) => {
       return this._serverResponse(res)
     })
@@ -96,7 +95,7 @@ export default class Api {
     return fetch(`${this._urlSrvers}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      credentials: this._credentials,
+      credentials: 'include',
       body: JSON.stringify(data),
     }).then((res) => {
       return this._serverResponse(res)
