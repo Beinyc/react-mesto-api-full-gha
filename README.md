@@ -7,7 +7,7 @@
 
 Адрес репозитория: https://github.com/Beinyc/react-mesto-api-full-gha
 
-## Ссылки на проект
+## Ссылки на проект .
 
 IP 84.252.130.188
 
