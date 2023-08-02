@@ -1,64 +1,68 @@
-// Подключаем dotenv чтобы с файла .env подключение было на сервере
-require('dotenv').config();
 const express = require('express');
-// const cors = require('./middlewares/cors');
-
-const app = express();
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const cors = require('cors');
 
-app.use(cors({
-  origin: 'https://beiny.students.nomoreparties.co',
-  // origin: 'http://localhost:3001',
-  credentials: true,
-}));
-
+const limiter = require('./middlewares/rateLimiter');
+const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const nonExistenRoutes = require('./routes/nonExistenRoutes');
-const registerRouter = require('./routes/register');
-const loginRouter = require('./routes/login');
-const logoutRouter = require('./routes/logout');
-const userRoutes = require('./routes/users');
-const cardRoutes = require('./routes/cards');
+const routeSignup = require('./routes/signup');
+const routeSignin = require('./routes/signin');
 
 const auth = require('./middlewares/auth');
-const errorsHandler = require('./middlewares/errorsHandler');
 
-const {
-  PORT = 3000,
+const routeUsers = require('./routes/users');
+const routeCards = require('./routes/cards');
 
-} = process.env;
+const NotFoundError = require('./errors/NotFoundError');
+const errorHandler = require('./middlewares/errorHandler');
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', { useNewUrlParser: true });
+const URL = 'mongodb://127.0.0.1:27017/mestodb';
+const { PORT = 3000 } = process.env;
+
+mongoose.set('strictQuery', true);
+
+mongoose
+  .connect(URL)
+  .then(() => {
+    console.log('БД подключена');
+  })
+  .catch(() => {
+    console.log('Не удалось подключиться к БД');
+  });
+
+const app = express();
+
+app.use(helmet());
 
 app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
-// app.use(cors);
+app.use(cors);
 
-// удалить после проверки ревью временный crash-test
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
 
-app.use(registerRouter);
-app.use(loginRouter);
+app.use(limiter);
+
+app.use('/', routeSignup);
+app.use('/', routeSignin);
+
 app.use(auth);
-app.use(userRoutes);
-app.use(cardRoutes);
-app.use(logoutRouter);
-app.use(nonExistenRoutes);
 
 app.use(errorLogger);
 
-app.use(errors());
-app.use(errorsHandler);
+app.use('/users', routeUsers);
+app.use('/cards', routeCards);
 
-app.listen(PORT, () => {});
+app.use((req, res, next) => next(new NotFoundError('Страницы по запрошенному URL не существует')));
+app.use(errors());
+app.use(errorHandler);
+
+app.listen(PORT);

@@ -15,7 +15,6 @@ export const register = (email, password) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    credentials: 'include',
     body: JSON.stringify({ email, password }),
   }).then(getResponseData
   );
@@ -28,38 +27,19 @@ export const autHorizen = (email, password) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    credentials: 'include',
     body: JSON.stringify({ email, password }),
   }).then(getResponseData
   );
 };
 
-export const getContent = () => {
+export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
-    credentials: 'include',
   }).then(getResponseData
   );
 };
-
-// запрос логаута
-export const logout = () => {
-  return fetch(`${BASE_URL}/logout`, {
-      method: 'GET',
-      headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-      },
-      credentials: 'include'
-  })
-  .then((res) => {
-      console.log(res);
-  })
-  .catch((err) => {
-      console.log(err.status);
-  })
-}

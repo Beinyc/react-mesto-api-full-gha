@@ -46,7 +46,7 @@ export default function App({}) {
       Promise.all([tokenApi.getUserData(), tokenApi.getInitialCards()])
         .then(([userInfo, cards]) => {
           setCurrentUser(userInfo)
-          setCards(cards.reverse())
+          setCards(cards.data.reverse())
         })
         .catch((err) => {
           console.log(`ошибка ${err}`)
@@ -62,7 +62,7 @@ export default function App({}) {
     )
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => (c._id === newCard._id ? newCard : c))
+          state.map((c) => (c._id === newCard.data._id ? newCard.data : c))
         )
       })
       .catch((err) => console.log(err))
@@ -160,52 +160,23 @@ export default function App({}) {
       })
   }
 
-  // const checkToken = () => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     auth
-  //       .getContent(token)
-  //       .then((res) => {
-  //         setUserData(res.data.email);
-  //         setLoggedIn(true);
-  //         navigate("/", { replace: true });
-  //       })
-  //       .catch((error) => console.log(`Произошла ошибка: ${error}`));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkToken();
-  // }, [loggedIn]);
-
-  // если в локальном хранилище валидный токен => залогинить пользователя и отправить в мейн страницу
-  function checkToken() {
-    // неправильно назвал функцию, функция возвращает информацию о пользователе
-    auth
-      .getContent()
-      .then((data) => {
-        if (data) {
-          // setCurrentUser(data);
-          console.log(data)
-          setUserData(data.email)
-
-          setLoggedIn(true)
-          navigate("/", { replace: true })
-        } else {
-          setLoggedIn(false)
-          navigate("/sign-in", { replace: true })
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        setLoggedIn(false)
-      })
-  }
+  const checkToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth
+        .getContent(token)
+        .then((res) => {
+          setUserData(res.email);
+          setLoggedIn(true);
+          navigate("/", { replace: true });
+        })
+        .catch((error) => console.log(`Произошла ошибка: ${error}`));
+    }
+  };
 
   useEffect(() => {
-    checkToken()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    checkToken();
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
