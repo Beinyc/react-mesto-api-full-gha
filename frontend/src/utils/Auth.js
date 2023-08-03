@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://api.beiny.students.nomoreparties.co";
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://api.beiny.students.nomoreparties.co";
+// export const BASE_URL = "http://localhost:3000";
 
 const getResponseData = (res) => {
   if (!res.ok) {
