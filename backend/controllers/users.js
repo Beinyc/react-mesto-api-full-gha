@@ -60,16 +60,15 @@ function loginUser(req, res, next) {
 
   User.findUserByCredentials(email, password)
     .then(({ _id: userId }) => {
-      if (userId) {
-        const token = jwt.sign(
-          { userId },
-          NODE_ENV === 'production' ? SECRET_KEY : 'dev-secret',
-          { expiresIn: '7d' },
-        );
+      const token = jwt.sign(
+        { userId },
+        NODE_ENV === 'production' ? SECRET_KEY : 'dev-secret',
+        { expiresIn: '7d' },
+      );
 
-        return res.send({ token });
-      }
-
+      return res.send({ token });
+    })
+    .catch(() => {
       throw new ErrorUnauthorized('Неправильные почта или пароль');
     })
     .catch(next);
@@ -113,11 +112,7 @@ function getCurrentUserInfo(req, res, next) {
       throw new ErrorNotFound('Пользователь с таким id не найден');
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new ErrorHandler('Передан некорректный id'));
-      } else {
-        next(err);
-      }
+      next(err);
     });
 }
 
@@ -143,7 +138,7 @@ function editProfileUserInfo(req, res, next) {
       throw new ErrorNotFound('Пользователь с таким id не найден');
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         next(
           new ErrorHandler(
             'Переданы некорректные данные при обновлении профиля',
@@ -176,7 +171,7 @@ function updateProfileUserAvatar(req, res, next) {
       throw new ErrorNotFound('Пользователь с таким id не найден');
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         next(
           new ErrorHandler(
             'Переданы некорректные данные при обновлении профиля пользователя',

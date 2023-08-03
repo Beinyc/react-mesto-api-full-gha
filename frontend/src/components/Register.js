@@ -8,7 +8,7 @@ export default function Register({ setInfoTooltip, setSuccessfully }) {
     password: "",
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,20 +21,22 @@ export default function Register({ setInfoTooltip, setSuccessfully }) {
 
   const handleSubmit = (e) => {
     const { email, password } = formValue;
+    console.log(formValue)
     e.preventDefault();
     auth
       .register(email, password)
       .then(() => {
         setSuccessfully(true);
+        setInfoTooltip(true)
+        navigate('/sign-in');
       })
-      .catch(() => setSuccessfully(false))
-      .finally(() => setInfoTooltip(true));
+      .catch(() => setInfoTooltip(true));
   };
 
   return (
     <div className="register">
       <h2 className="register__title">Регистрация</h2>
-      <form onSubmit={handleSubmit} className="register__form">
+      <form className="register__form" onSubmit={handleSubmit}>
         <input
           placeholder="Email"
           className="register__input"
@@ -55,6 +57,8 @@ export default function Register({ setInfoTooltip, setSuccessfully }) {
         ></input>
         <button
           className="register__button"
+        
+          type="submit"
         >
           Зарегистрироваться
         </button>

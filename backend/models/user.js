@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const { URL_SERVER } = require('../utils/constants');
+const ErrorUnauthorized = require('../errors/ErrorUnauthorized');
 
 const { Schema } = mongoose;
 
@@ -21,28 +22,20 @@ const userSchema = new Schema(
       type: String,
       required: true,
       select: false,
-      validate: {
-        validator: ({ length }) => length >= 8,
-        message: 'Пароль должен состоять минимум из 8 символов',
-      },
     },
 
     name: {
       type: String,
       default: 'Жак-Ив Кусто',
-      validate: {
-        validator: ({ length }) => length >= 2 && length <= 30,
-        message: 'Имя пользователя должно быть длиной от 2 до 30 символов',
-      },
+      minlength: [2, 'Минимальная длина поля "name" - 2'],
+      maxlength: [30, 'Максимальная длина поля "name" - 30'],
     },
 
     about: {
       type: String,
       default: 'Исследователь',
-      validate: {
-        validator: ({ length }) => length >= 2 && length <= 30,
-        message: 'Информация о пользователе должна быть длиной от 2 до 30 символов',
-      },
+      minlength: [2, 'Минимальная длина поля "name" - 2'],
+      maxlength: [30, 'Максимальная длина поля "name" - 30'],
     },
 
     avatar: {
@@ -68,11 +61,11 @@ const userSchema = new Schema(
                 .then((matched) => {
                   if (matched) return user;
 
-                  return Promise.reject();
+                  throw new ErrorUnauthorized('Неправильная почта или пароль');
                 });
             }
 
-            return Promise.reject();
+            throw new ErrorUnauthorized('Неправильная почта или пароль');
           });
       },
     },
