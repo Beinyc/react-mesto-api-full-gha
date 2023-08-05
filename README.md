@@ -26,7 +26,6 @@
 ![MongoDB](https://img.shields.io/badge/-MongoDB-090909?style=for-the-badge&logo=MongoDB)
 ![Postman](https://img.shields.io/badge/-Postman-090909?style=for-the-badge&logo=Postman)
 
-<<<<<<< HEAD
 # Инструкция по установке:
 1. Клонировать репозиторий 
 `https://github.com/Beinyc/react-mesto-api-full-gha`
