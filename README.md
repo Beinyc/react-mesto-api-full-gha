@@ -26,6 +26,7 @@
 ![MongoDB](https://img.shields.io/badge/-MongoDB-090909?style=for-the-badge&logo=MongoDB)
 ![Postman](https://img.shields.io/badge/-Postman-090909?style=for-the-badge&logo=Postman)
 
+<<<<<<< HEAD
 # Инструкция по установке:
 1. Клонировать репозиторий 
 `https://github.com/Beinyc/react-mesto-api-full-gha`
@@ -35,3 +36,36 @@
 3. Запустить приложение в режиме разработки:
 `npm run start`
 `npm run dev`
+=======
+## Ссылки на проект 
+
+IP 84.252.130.188
+
+Frontend https://beiny.students.nomoredomains.sbs
+
+Backend https://api.beiny.students.nomoreparties.co
+
+
+Mesto (backend + frontend)
+Сервис для обмена фотографиями, созданный в рамках обучения в Яндекс.Практикум ("Веб-разработчик"). Репозиторий включает в себя фронтенд и бэкенд части приложения.
+Регистрация / авторизация пользователя
+Добавление / удаление карточки
+Добавление / удаление лайка фото
+Изменение информации о себе
+Редактирование аватара
+Ссылки:
+Frontend: https://beiny.students.nomoredomains.sbs
+Backend: https://api.beiny.students.nomoreparties.co
+Публичный IP-адрес: 84.252.130.188
+Технологии:
+Frontend
+JavaScript React CSS3 HTML5
+
+Backend
+Express Node.js MongoDB Postman
+
+Инструкция по установке:
+Клонировать репозиторий https://github.com/Sonyamaster1/react-mesto-api-full.git
+Установить зависимости: cd react-mesto-api-full npm install
+Запустить приложение в режиме разработки: npm run start npm run dev
+>>>>>>> 133ce5891f5068aad3d371aa7144af8425edd6ea
